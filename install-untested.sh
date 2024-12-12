@@ -384,6 +384,9 @@ mount "$ESP" /mnt/boot/
 microcode_detector
 
 # Pacstrap (setting up a base sytem onto the new root).
+if [[ $gpu == "nvidia-open-dkms" ]]; then
+    gpu+=" nvidia-dkms nvidia-utils lib32-nvidia-utils egl-wayland"
+fi
 info_print "Installing the base system (it may take a while)."
 pacstrap -K /mnt base "$kernel" "$microcode" linux-firmware "$kernel"-headers "$gpu" btrfs-progs grub grub-btrfs rsync efibootmgr snapper reflector snap-pac zram-generator sudo &>/dev/null
 
